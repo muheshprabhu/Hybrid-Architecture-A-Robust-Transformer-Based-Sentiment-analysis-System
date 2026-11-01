@@ -1,0 +1,12 @@
+{
+  "encoder_name": "microsoft/deberta-v3-base",
+  "max_len": 128,
+  "lr": 3.303127417682292e-05,
+  "head_lr": 0.00026873101690711126,
+  "weight_decay": 0.0028478291139971343,
+  "warmup_ratio": 0.13580236552234165,
+  "dropout": 0.2227722359011246,
+  "onlstm_hidden": 128,
+  "chunk_size": 8,
+  "adv_epsilon": 0.5579123883963542
+}

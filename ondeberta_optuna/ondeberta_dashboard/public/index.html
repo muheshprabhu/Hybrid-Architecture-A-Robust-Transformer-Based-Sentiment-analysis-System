@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OnDeBERTa Dashboard</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body data-mood="neutral">
+  <div class="bg-layer bg-neutral"></div>
+  <div class="bg-layer bg-positive"></div>
+  <div class="bg-layer bg-negative"></div>
+  <canvas id="particles"></canvas>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <span class="dot" id="moodDot"></span>
+        <div>
+          <h1>OnDeBERTa Sentiment Dashboard</h1>
+          <span class="sub">DeBERTa + ON-LSTM + Attention Pooling, tuned with Optuna</span>
+        </div>
+      </div>
+      <div class="chips" id="moduleChips"></div>
+    </header>
+
+    <section class="hero">
+      <h2>Try a review</h2>
+      <p class="lead">Type a movie review and analyze it. The cursor trail and background react to the predicted sentiment.</p>
+      <textarea id="review" placeholder="e.g. The pacing dragged in the middle, but the ending genuinely surprised me and pulled it all together.">The pacing dragged in the middle, but the ending genuinely surprised me and pulled it all together.</textarea>
+      <div class="hero-row">
+        <button id="analyze">Analyze sentiment</button>
+        <span class="source-tag" id="sourceTag"></span>
+      </div>
+      <div class="result" id="result">
+        <div class="result-label">
+          <span class="big" id="resultBig">—</span>
+          <span class="conf" id="resultConf"></span>
+        </div>
+        <div class="probe-bar"><div class="probe-fill" id="probeFill"></div></div>
+        <div class="probe-labels"><span>Negative</span><span>Positive</span></div>
+        <div class="attn-row" id="attnRow"></div>
+      </div>
+    </section>
+
+    <h2 class="section-title">Test-set performance</h2>
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="panel-grid">
+      <div class="panel">
+        <h3>Training curves</h3>
+        <p class="hint">Train / validation loss and validation F1 across the 4 fine-tuning epochs.</p>
+        <svg id="curveChart" class="chart" viewBox="0 0 560 260" width="100%"></svg>
+        <div class="legend" id="curveLegend"></div>
+      </div>
+      <div class="panel">
+        <h3>Optuna trials</h3>
+        <p class="hint">Validation F1 per trial — TPE sampler, median pruner.</p>
+        <svg id="trialChart" class="chart" viewBox="0 0 420 260" width="100%"></svg>
+        <table class="trials" id="trialTable"></table>
+      </div>
+    </div>
+
+    <h2 class="section-title">Best hyperparameters (Optuna)</h2>
+    <div class="panel">
+      <table class="trials" id="paramsTable"></table>
+    </div>
+
+    <h2 class="section-title">Modules</h2>
+    <div class="module-grid" id="moduleGrid"></div>
+
+    <footer>
+      <span>Served locally with Node + Express.</span>
+      <span id="modelStatus">Checking model connection…</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

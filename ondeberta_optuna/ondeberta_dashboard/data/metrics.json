@@ -1,0 +1,52 @@
+{
+  "dataset": {
+    "name": "IMDB Movie Reviews",
+    "totalReviews": 50000,
+    "classes": ["Negative", "Positive"],
+    "splits": { "train": 35000, "val": 5000, "test": 10000 }
+  },
+  "test": {
+    "accuracy": 0.9202,
+    "precision": 0.9152,
+    "recall": 0.9262,
+    "f1": 0.9207,
+    "loss": 0.2645
+  },
+  "bestEpoch": 3,
+  "epochs": [
+    { "epoch": 1, "trainLoss": 0.3802, "valLoss": 0.2256, "valAccuracy": 0.9058, "valPrecision": 0.9037, "valRecall": 0.9084, "valF1": 0.9060 },
+    { "epoch": 2, "trainLoss": 0.2083, "valLoss": 0.2044, "valAccuracy": 0.9146, "valPrecision": 0.9346, "valRecall": 0.8916, "valF1": 0.9126 },
+    { "epoch": 3, "trainLoss": 0.1298, "valLoss": 0.2156, "valAccuracy": 0.9182, "valPrecision": 0.9164, "valRecall": 0.9204, "valF1": 0.9184 },
+    { "epoch": 4, "trainLoss": 0.0724, "valLoss": 0.2642, "valAccuracy": 0.9182, "valPrecision": 0.9160, "valRecall": 0.9208, "valF1": 0.9184 }
+  ],
+  "bestParams": {
+    "encoder_lr": 3.303e-5,
+    "head_lr": 2.687e-4,
+    "weight_decay": 0.002848,
+    "warmup_ratio": 0.1358,
+    "dropout": 0.2228,
+    "onlstm_hidden": 128,
+    "chunk_size": 8,
+    "onlstm_layers": 1,
+    "adv_epsilon": 0.5579,
+    "batch_size": 32,
+    "max_len": 128
+  },
+  "trials": [
+    { "trial": 0, "f1": 0.8848, "status": "complete", "lr": 2.82e-5, "dropout": 0.0890, "onlstm_hidden": 128, "adv_epsilon": 0.1185 },
+    { "trial": 1, "f1": 0.0166, "status": "collapsed", "lr": 4.864e-5, "dropout": 0.0959, "onlstm_hidden": 256, "adv_epsilon": 0.2255 },
+    { "trial": 2, "f1": 0.8696, "status": "complete", "lr": 2.614e-5, "dropout": 0.0999, "onlstm_hidden": 256, "adv_epsilon": 0.1585 },
+    { "trial": 3, "f1": 0.6450, "status": "pruned", "lr": null, "dropout": null, "onlstm_hidden": null, "adv_epsilon": null },
+    { "trial": 4, "f1": 0.8839, "status": "complete", "lr": 2.067e-5, "dropout": 0.2714, "onlstm_hidden": 128, "adv_epsilon": 0.6742 },
+    { "trial": 5, "f1": 0.8925, "status": "best", "lr": 3.303e-5, "dropout": 0.2228, "onlstm_hidden": 128, "adv_epsilon": 0.5579 }
+  ],
+  "modules": [
+    { "name": "Data Pre-processing & Tokenization", "detail": "Clean, NFKC-normalise, DeBERTa SentencePiece tokenizer" },
+    { "name": "DeBERTa Encoder", "detail": "12-block disentangled-attention Transformer, hidden size 768" },
+    { "name": "Adversarial Training", "detail": "FGM perturbation on word embeddings, ε = 0.56" },
+    { "name": "ON-LSTM Decoder", "detail": "1 memory layer, hidden 128, chunk size 8 (cumax ordered gates)" },
+    { "name": "Optuna Controller", "detail": "TPE sampler + median pruner, 6 trials, objective = val F1" },
+    { "name": "Attention Pooling", "detail": "Learned per-token weights α, weighted sum → review vector" },
+    { "name": "FC + Softmax", "detail": "Linear → GELU → Linear → softmax over {Negative, Positive}" }
+  ]
+}

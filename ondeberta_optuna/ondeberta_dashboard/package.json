@@ -1,0 +1,12 @@
+{
+  "name": "ondeberta-dashboard",
+  "version": "1.0.0",
+  "description": "OnDeBERTa + Optuna sentiment dashboard: live demo + training metrics, running on a local Node server.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
